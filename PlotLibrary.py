@@ -6,9 +6,9 @@
 from math import *
 import numpy as np
 from array import *
-import ROOT
+#import ROOT
 import string
-from Macro import *
+#from Macro import *
 class Spectrum:
   def __init__(self,Parameters,Model="",Emin=100,Emax=3e5,Npt=1000):
 

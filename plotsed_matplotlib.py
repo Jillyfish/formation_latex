@@ -4,13 +4,16 @@ import Loggin
 from math import *
 import numpy as np
 from array import *
-import ROOT
+
 import string
-from Macro import *
+#from Macro import *
 import ReadCatalog as ReadCat
 import sys as sys
+import matplotlib.pyplot as plt
 
 HztoMeV=4.1357e-21
+
+
 
 source2FHL = "2FHL J0639.9-1252"
 source3FGL = "3FGL J0640.0-1252"
@@ -67,6 +70,12 @@ sed = np.array(sed)
 dsed = np.array(dsed)
 logE_ul = np.array(logE_ul)
 sed_ul = np.array(sed_ul)
+
+#plt.loglog()
+plt.plot(logE, sed, 'bo',label = "PKS 2155")
+plt.ylabel('SED' )
+plt.xlabel('log(Energy)')
+plt.show()
 
 data_ref = np.genfromtxt("ApLibrae.txt", unpack=True)
 logE_ref = []

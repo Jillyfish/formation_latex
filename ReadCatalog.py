@@ -2,9 +2,12 @@ import pyfits,string,numpy
 import PlotLibrary
 import Loggin
 from math import *
+import os,sys
+from os.path import join
 
 class CatalogReader(Loggin.base):
-  def __init__(self,name,folder="/Users/p549/GitHub/formation_latex"):
+  path =  join(os.getcwd())
+  def __init__(self,name,folder=path):
     super(CatalogReader,self).__init__()
     Loggin.base.__init__(self)
 
