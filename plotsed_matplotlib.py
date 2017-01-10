@@ -4,17 +4,14 @@ import Loggin
 from math import *
 import numpy as np
 from array import *
-
-import string
-#from Macro import *
-import ReadCatalog as ReadCat
-import sys as sys
 import matplotlib.pyplot as plt
+import ReadCatalog as ReadCat
 
 HztoMeV=4.1357e-21
 
-
-
+### source names for the 2FHL and 3FGL catalogs
+### watch out for the spaces
+>>>>>>> origin/master
 source2FHL = "2FHL J0639.9-1252"
 source3FGL = "3FGL J0640.0-1252"
 source = "TXS0637-128"
@@ -22,32 +19,35 @@ source = "TXS0637-128"
 Emin = 50e3 # 50 GeV
 Emax = 2e6  # 2 TeV
 
+### 2FHL
 Cat2FHL = ReadCat.CatalogReader(source2FHL)
-params = Cat2FHL.ReadPL2("2FHL")
-Spec = PlotLibrary.Spectrum(params,"PowerLaw2",Emin,Emax)
+params  = Cat2FHL.ReadPL2("2FHL")
+Spec    = PlotLibrary.Spectrum(params,"PowerLaw2",Emin,Emax)
 ener, phi, dphi = Spec.MakeSEDAndError(Emin,Emax)
 dphi_down = np.log10(phi) - np.log10(phi-dphi)
-dphi_up = np.log10(phi+dphi) - np.log10(phi)
+dphi_up   = np.log10(phi+dphi) - np.log10(phi)
 
+### 3FGL
 Cat3FGL = ReadCat.CatalogReader(source3FGL)
-model = Cat3FGL.GetModels()
+model   = Cat3FGL.GetModels()
 if (str(model) == "PowerLaw") :
 	params = Cat3FGL.ReadPL("3FGL")
 if (str(model) == "LogParabola") :
 	params = Cat3FGL.ReadLP("3FGL")
 Spec = PlotLibrary.Spectrum(params,str(model),100,300e3)
-energ, butt = Spec.GetButterfly(100,300e3)
-em,ep,flux,dflux =  Cat3FGL.GetDataPoints('3FGL')
+energ, butt = Spec.GetButterfly(100,300e3)				# 3FGL butterfly
+em,ep,flux,dflux =  Cat3FGL.GetDataPoints('3FGL')		# 3FGL data points
 ener = np.sqrt(em*ep)
 dem = ener-em
 dep = ep-ener
-c=Cat3FGL.ReadPL('3FGL')[3]
+c = Cat3FGL.ReadPL('3FGL')[3]
 dnde = (-c+1)*flux*np.power(ener,-c+2)/(np.power((ep),-c+1)-np.power((em),-c+1))*1.6e-6
 ddnde = dnde*dflux/flux
 
-for i in range(len(ener)) :
-  print ener[i], dnde[i], ddnde[i]
+# for i in range(len(ener)) :
+#   print ener[i], dnde[i], ddnde[i]
 
+# SED Builder data of the source
 data_SED = np.genfromtxt(str(source)+".txt", unpack=True)
 logE = []
 sed = []
@@ -71,13 +71,16 @@ dsed = np.array(dsed)
 logE_ul = np.array(logE_ul)
 sed_ul = np.array(sed_ul)
 
+
 #plt.loglog()
 plt.plot(logE, sed, 'bo',label = "PKS 2155")
 plt.ylabel('SED' )
 plt.xlabel('log(Energy)')
 plt.show()
 
-data_ref = np.genfromtxt("ApLibrae.txt", unpack=True)
+# SED Builder data of a reference source
+data_ref = np.genfromtxt("1ES0229+200.txt", unpack=True)
+>>>>>>> origin/master
 logE_ref = []
 sed_ref = []
 dsed_ref = []
