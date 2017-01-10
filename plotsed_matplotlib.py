@@ -12,9 +12,9 @@ import sys as sys
 
 HztoMeV=4.1357e-21
 
-source2FHL = "2FHL J2158.8-3013"
-source3FGL = "3FGL J2158.8-3013"
-source = "PKS2155-304"
+source2FHL = "2FHL J0639.9-1252"
+source3FGL = "3FGL J0640.0-1252"
+source = "TXS0637-128"
 
 Emin = 50e3 # 50 GeV
 Emax = 2e6  # 2 TeV
@@ -25,7 +25,6 @@ Spec = PlotLibrary.Spectrum(params,"PowerLaw2",Emin,Emax)
 ener, phi, dphi = Spec.MakeSEDAndError(Emin,Emax)
 dphi_down = np.log10(phi) - np.log10(phi-dphi)
 dphi_up = np.log10(phi+dphi) - np.log10(phi)
-tgr_2FHL = MakeTGraph(np.log10(ener),np.log10(phi),9,23)
 
 Cat3FGL = ReadCat.CatalogReader(source3FGL)
 model = Cat3FGL.GetModels()
@@ -35,7 +34,6 @@ if (str(model) == "LogParabola") :
 	params = Cat3FGL.ReadLP("3FGL")
 Spec = PlotLibrary.Spectrum(params,str(model),100,300e3)
 energ, butt = Spec.GetButterfly(100,300e3)
-tgr_3FGL = MakeTGraph(np.log10(energ),np.log10(butt),6)
 em,ep,flux,dflux =  Cat3FGL.GetDataPoints('3FGL')
 ener = np.sqrt(em*ep)
 dem = ener-em
@@ -43,7 +41,6 @@ dep = ep-ener
 c=Cat3FGL.ReadPL('3FGL')[3]
 dnde = (-c+1)*flux*np.power(ener,-c+2)/(np.power((ep),-c+1)-np.power((em),-c+1))*1.6e-6
 ddnde = dnde*dflux/flux
-tgr_3FGL_p = MakeTGraphAsymmErrors(np.log10(ener),np.log10(dnde),array('f',len(em)*[0.]),array('f',len(em)*[0.]),np.log10(ddnde),np.log10(ddnde),6,8,0.7)
 
 for i in range(len(ener)) :
   print ener[i], dnde[i], ddnde[i]
