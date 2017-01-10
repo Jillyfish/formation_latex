@@ -4,7 +4,7 @@ import Loggin
 from math import *
 
 class CatalogReader(Loggin.base):
-  def __init__(self,name,folder="/Users/p549/Work/Proposal_blazarseq_2016"):
+  def __init__(self,name,folder="/Users/p549/GitHub/formation_latex"):
     super(CatalogReader,self).__init__()
     Loggin.base.__init__(self)
 
@@ -12,7 +12,7 @@ class CatalogReader(Loggin.base):
 
     self.CatalogData = {'3FGL':{},'2FGL':{},'1FHL':{},'2FHL':{}}
     self.CatalogData['3FGL']['fits'] = folder+"/gll_psc_v16.fit"
-    self.CatalogData['2FGL']['fits'] = folder+"/gll_psc_v08.fit"
+    self.CatalogData['2FGL']['fits'] = folder+"/gll_psc_v09.fit"
     self.CatalogData['1FHL']['fits'] = folder+"/gll_psch_v07.fit"
     self.CatalogData['2FHL']['fits'] = folder+"/gll_psch_v08.fit"
 

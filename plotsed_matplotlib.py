@@ -11,8 +11,6 @@ import ReadCatalog as ReadCat
 import sys as sys
 
 HztoMeV=4.1357e-21
-data_2FHL = np.genfromtxt("sourceslist_LBL_2FHLx3FGL_workon.dat", dtype='string', unpack=True)
-# data_2FHL = np.genfromtxt("sourceslist_X-HBL_2FHLx3FGL_workon.dat", dtype='string', unpack=True)
 
 source2FHL = "2FHL J2158.8-3013"
 source3FGL = "3FGL J2158.8-3013"
@@ -50,13 +48,7 @@ tgr_3FGL_p = MakeTGraphAsymmErrors(np.log10(ener),np.log10(dnde),array('f',len(e
 for i in range(len(ener)) :
   print ener[i], dnde[i], ddnde[i]
 
-# data_analysis = np.genfromtxt("Fermianalysis/SED_"+str(source[0:7])+"_LogParabola.dat", unpack=True)  
-# params = np.array[]
-# Spec2 = PlotLibrary.Spectrum(params,Model="LogParabola",Emin=100,Emax=300e3)
-# energy,butterfly = Spec2.GetButterfly(SED=True)
-# tgr_dataanalysis = MakeTGraph(np.log10(energy),np.log10(butterfly),97)
-
-data_SED = np.genfromtxt("SEDbuilder_data/"+str(source)+".txt", unpack=True)
+data_SED = np.genfromtxt(str(source)+".txt", unpack=True)
 logE = []
 sed = []
 dsed = []
@@ -79,24 +71,7 @@ dsed = np.array(dsed)
 logE_ul = np.array(logE_ul)
 sed_ul = np.array(sed_ul)
 
-tgr_sedsource = MakeTGraphErrors(logE,sed,logE*0,dsed)
-tgr_sedul = MakeTGraph(logE_ul,sed_ul)
-
-data_HESS = np.genfromtxt("HESS_analysisdata/PKS0537_flux_ul.dat", unpack = True)
-energy = data_HESS[0]*1e6 
-ergenergy = energy/624151.
-flux = data_HESS[1]*1e-4*ergenergy
-tgrUL = MakeTGraph(np.log10(energy),np.log10(flux),8,23)
-
-data_ref = np.genfromtxt("SEDbuilder_data/ApLibrae.txt", unpack=True)
-points = np.genfromtxt("SEDbuilder_data/ApLib_SED_2014.dat", unpack=True)
-dlogE_down = np.log10(points[0]*1e-6) - np.log10(points[0]*1e-6-points[1]*1e-6)
-dlogE_up = np.log10(points[0]*1e-6+points[1]*1e-6) - np.log10(points[0]*1e-6)
-dsed_down = np.log10(points[2]) - np.log10(points[2]-points[3])
-dsed_up = np.log10(points[2]+points[3]) - np.log10(points[02])
-tgrpoints = MakeTGraphAsymmErrors(np.log10(points[0]*1e-6),np.log10(points[2]),dlogE_down,dlogE_up,dsed_down,dsed_up,96)
-
-
+data_ref = np.genfromtxt("ApLibrae.txt", unpack=True)
 logE_ref = []
 sed_ref = []
 dsed_ref = []
@@ -115,26 +90,6 @@ sed_ref = np.array(sed_ref)
 dsed_ref = np.array(dsed_ref)
 logE_reful = np.array(logE_reful)
 sed_reful = np.array(sed_reful)
-tgr_ref = MakeTGraphErrors(logE_ref,sed_ref,logE_ref*0,dsed_ref,color=15)
-tgr_reful = MakeTGraph(logE_reful,sed_reful,color=15)
-
-
-canvas = ROOT.TCanvas("canvas")
-fenetre = ROOT.TH2F("",str(source)+", z = 0.116",10,-14,8,10,-17,-8)
-fenetre.SetStats(000)
-fenetre.SetXTitle("Energy (MeV)")
-fenetre.SetYTitle("#nu F_{#nu} (ergs/cm2/s)")
-fenetre.Draw()
-
-# tgr_ref.Draw("Pz")
-# tgr_reful.Draw("Pz")
-# tgrpoints.Draw("Pz")
-tgr_sedsource.Draw("Pz")
-tgr_sedul.Draw("Pz")
-# tgr_3FGL.Draw("L")
-# tgr_2FHL.Draw("L")
-# tgrUL.Draw("P")
-# tgr_dataanalysis.Draw("L")
 
 
 
